@@ -84,7 +84,6 @@ public class HabitTrackerForm {
             JOptionPane.showMessageDialog(frame, "You have " + habits.size() + " habits.");
         });
     }
-
     private void updateDisplay() {
         textArea1.setText("");
         List<Document> habits = habitCollection.find(new Document("user", currentUser)).into(new ArrayList<>());
