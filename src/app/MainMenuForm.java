@@ -65,8 +65,7 @@ public class MainMenuForm {
 
         sleepTrackerButton.addActionListener(e -> new SleepTrackerForm(username));
 
-        studyTrackerButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "Study Planner clicked"));
+        studyTrackerButton.addActionListener(e -> new StudyTrackerForm(username));
 
         moodTrackerButton.addActionListener(e ->
                 JOptionPane.showMessageDialog(frame, "Mood Tracker clicked"));
