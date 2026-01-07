@@ -24,8 +24,6 @@ public class HabitTrackerForm {
 
     public HabitTrackerForm(String username) {
         this.currentUser = username;
-
-        // Konekcija na bazu i kolekciju
         db = Database.getDatabase();
         habitCollection = db.getCollection("habits");
 
@@ -35,31 +33,23 @@ public class HabitTrackerForm {
         frame.setSize(500, 400);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
-        // Prikupi podatke iz baze na startu
         updateDisplay();
 
-        // ➕ Add dugme
         addButton.addActionListener(e -> {
             String habit = JOptionPane.showInputDialog(frame, "Enter new habit:");
             if (habit != null && !habit.isEmpty()) {
-                // Spremi u bazu
                 Document doc = new Document("user", currentUser)
                         .append("habit", habit);
                 habitCollection.insertOne(doc);
                 updateDisplay();
             }
         });
-
-        // ✏️ Edit dugme
         editButton.addActionListener(e -> {
             List<Document> habits = habitCollection.find(new Document("user", currentUser)).into(new ArrayList<>());
             if (habits.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "No habits to edit!");
                 return;
             }
-
-            // Biramo koji
             String[] habitNames = habits.stream().map(d -> d.getString("habit")).toArray(String[]::new);
             String selected = (String) JOptionPane.showInputDialog(frame, "Select habit to edit:",
                     "Edit Habit", JOptionPane.QUESTION_MESSAGE, null, habitNames, habitNames[0]);
@@ -73,8 +63,6 @@ public class HabitTrackerForm {
                 }
             }
         });
-
-        // ❌ Delete dugme
         deleteButton.addActionListener(e -> {
             List<Document> habits = habitCollection.find(new Document("user", currentUser)).into(new ArrayList<>());
             if (habits.isEmpty()) {
@@ -91,8 +79,6 @@ public class HabitTrackerForm {
                 updateDisplay();
             }
         });
-
-        // 📊 Analytics dugme
         analyticsButton.addActionListener(e -> {
             List<Document> habits = habitCollection.find(new Document("user", currentUser)).into(new ArrayList<>());
             JOptionPane.showMessageDialog(frame, "You have " + habits.size() + " habits.");

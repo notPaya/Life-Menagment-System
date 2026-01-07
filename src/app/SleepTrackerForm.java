@@ -49,7 +49,6 @@ public class SleepTrackerForm {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        // Add dugme
         addButton.addActionListener(e -> {
             String input = JOptionPane.showInputDialog(frame, "How many hours did you sleep?");
             try {
@@ -64,7 +63,6 @@ public class SleepTrackerForm {
             }
         });
 
-        // Edit dugme
         editButton.addActionListener(e -> {
             MongoCollection<Document> collection = Database.getDatabase().getCollection("sleep");
             List<Document> userSleep = collection.find(Filters.eq("username", currentUser)).into(new ArrayList<>());
@@ -96,7 +94,6 @@ public class SleepTrackerForm {
             }
         });
 
-        // Delete dugme
         deleteButton.addActionListener(e -> {
             MongoCollection<Document> collection = Database.getDatabase().getCollection("sleep");
             List<Document> userSleep = collection.find(Filters.eq("username", currentUser)).into(new ArrayList<>());
@@ -120,8 +117,6 @@ public class SleepTrackerForm {
                 updateDisplay();
             }
         });
-
-        // Analytics dugme
         analyticsButton.addActionListener(e -> {
             MongoCollection<Document> collection = Database.getDatabase().getCollection("sleep");
             List<Document> userSleep = collection.find(Filters.eq("username", currentUser)).into(new ArrayList<>());

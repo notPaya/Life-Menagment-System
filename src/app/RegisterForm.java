@@ -21,7 +21,6 @@ public class RegisterForm {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5,5,5,5);
 
-        // Username
         JLabel userLabel = new JLabel("Username:");
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -31,7 +30,6 @@ public class RegisterForm {
         gbc.gridx = 1;
         panel.add(usernameField, gbc);
 
-        // Password
         JLabel passLabel = new JLabel("Password:");
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -41,21 +39,18 @@ public class RegisterForm {
         gbc.gridx = 1;
         panel.add(passwordField, gbc);
 
-        // Register button
         registerButton = new JButton("Register");
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         panel.add(registerButton, gbc);
 
-        // Akcija dugmeta
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
 
-                // 1️⃣ Spremanje u MongoDB
                 MongoCollection<Document> users = Database.getDatabase().getCollection("users");
                 Document doc = new Document("username", username)
                         .append("password", password); // za demo, kasnije možeš hash

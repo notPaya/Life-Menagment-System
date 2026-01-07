@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
 
-        // 1️⃣ prvo uključimo Nimbus
+
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -17,7 +17,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        // 2️⃣ onda kreiramo GUI
         JFrame frame = new JFrame("Life Management System");
         frame.setContentPane(new MainForm().getMainPanel());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

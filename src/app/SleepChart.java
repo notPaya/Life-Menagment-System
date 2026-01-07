@@ -12,7 +12,6 @@ public class SleepChart extends JPanel {
         this.data = data;
         setPreferredSize(new Dimension(500, 400));
     }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -46,7 +45,6 @@ public class SleepChart extends JPanel {
             g2.drawString(value + "h", x, y - 5);
         }
     }
-
     public static void showChart(ArrayList<Double> data) {
         JFrame frame = new JFrame("Sleep Chart");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

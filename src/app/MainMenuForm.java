@@ -19,7 +19,6 @@ public class MainMenuForm {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10,10,10,10);
 
-        // Dobrodošlica
         JLabel welcomeLabel = new JLabel("Hello, " + username + "!");
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
         gbc.gridx = 0;
@@ -27,14 +26,12 @@ public class MainMenuForm {
         gbc.gridwidth = 2;
         mainPanel.add(welcomeLabel, gbc);
 
-        // FinanceApp dugme
         financeButton = new JButton("FinanceApp");
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         mainPanel.add(financeButton, gbc);
 
-        // Dugmad za trackere
         habitTrackerButton = new JButton("Habit Tracker");
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -62,7 +59,6 @@ public class MainMenuForm {
         gbc.gridwidth = 2;
         mainPanel.add(waterTrackerButton, gbc);
 
-        //financeButton.addActionListener(e -> new FinanceTracker(username));
         financeButton.addActionListener(e -> new FinanceTracker(username));
 
         habitTrackerButton.addActionListener(e -> new HabitTrackerForm(username));

@@ -13,18 +13,11 @@ public class FinanceTracker extends JFrame {
     private JTable tableFinance;
 
     public FinanceTracker(String username) {
-
         setTitle("Finance Tracker - " + username);
-
         setContentPane(mainPanel);
-
-        // Ako koristiš GUI Designer — bolje je pack()
         pack();
-
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        // 🔥 OVO JE NEDOSTAJALO
         setVisible(true);
     }
 }

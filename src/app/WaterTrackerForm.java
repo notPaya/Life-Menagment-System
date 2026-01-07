@@ -30,7 +30,6 @@ public class WaterTrackerForm {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        // ➕ Add dugme
         addButton.addActionListener(e -> {
             String input = JOptionPane.showInputDialog(frame, "Enter water intake (litres):");
             try {
@@ -45,7 +44,6 @@ public class WaterTrackerForm {
             }
         });
 
-        // ✏️ Edit dugme
         editButton.addActionListener(e -> {
             MongoCollection<Document> collection = Database.getDatabase().getCollection("water");
             List<Document> userWater = collection.find(Filters.eq("username", currentUser)).into(new ArrayList<>());
@@ -82,7 +80,6 @@ public class WaterTrackerForm {
             }
         });
 
-        // ❌ Delete dugme
         deleteButton.addActionListener(e -> {
             MongoCollection<Document> collection = Database.getDatabase().getCollection("water");
             List<Document> userWater = collection.find(Filters.eq("username", currentUser)).into(new ArrayList<>());
@@ -111,8 +108,6 @@ public class WaterTrackerForm {
                 updateDisplay();
             }
         });
-
-        // 📊 Analytics dugme
         analyticsButton.addActionListener(e -> {
             MongoCollection<Document> collection = Database.getDatabase().getCollection("water");
             List<Document> userWater = collection.find(Filters.eq("username", currentUser)).into(new ArrayList<>());

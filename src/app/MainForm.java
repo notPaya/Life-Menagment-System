@@ -34,7 +34,6 @@ public class MainForm {
         gbc.gridy = 1;
         mainPanel.add(registerButton, gbc);
 
-        // akcija dugmeta
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
