@@ -12,27 +12,18 @@ public class Main {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 250);
             frame.setLocationRelativeTo(null);
-
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-            // NASLOV
             JLabel title = new JLabel("Life Management System");
             title.setAlignmentX(Component.CENTER_ALIGNMENT);
             title.setFont(new Font("Arial", Font.BOLD, 20));
-
-            // PRAZAN RAZMAK
             panel.add(Box.createVerticalStrut(20));
             panel.add(title);
             panel.add(Box.createVerticalStrut(25));
-
-            // LOGIN BUTTON
             JButton loginButton = new JButton("Login");
             loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             loginButton.setPreferredSize(new Dimension(120, 35));
             loginButton.setMaximumSize(new Dimension(120, 35));
-
-            // REGISTER BUTTON
             JButton registerButton = new JButton("Register");
             registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             registerButton.setPreferredSize(new Dimension(120, 35));
@@ -44,7 +35,6 @@ public class Main {
 
             frame.add(panel);
 
-            // EVENTI
             loginButton.addActionListener(e -> {
                 frame.dispose();
                 new LoginForm();
