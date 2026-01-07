@@ -53,14 +53,13 @@ public class RegisterForm {
 
                 MongoCollection<Document> users = Database.getDatabase().getCollection("users");
                 Document doc = new Document("username", username)
-                        .append("password", password); // za demo, kasnije možeš hash
+                        .append("password", password);
                 users.insertOne(doc);
 
                 JOptionPane.showMessageDialog(frame, "Registered: " + username);
                 frame.dispose();
             }
         });
-
         frame.setContentPane(panel);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
