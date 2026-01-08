@@ -4,8 +4,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FoodTrackerForm extends JFrame {
 
@@ -13,14 +16,12 @@ public class FoodTrackerForm extends JFrame {
     private JTextField foodField;
     private JTextField proteinField;
     private JButton addButton;
-    private JButton editButton;
     private JButton deleteButton;
     private JList<String> foodList;
-
     private DefaultListModel<String> listModel;
+    private List<ObjectId> foodIds = new ArrayList<>();
     private MongoCollection<Document> foodCollection;
     private String currentUser;
-
     public FoodTrackerForm(String username) {
 
         this.currentUser = username;
@@ -31,6 +32,7 @@ public class FoodTrackerForm extends JFrame {
         setTitle("Food Tracker - " + username);
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(400, 500);
         setLocationRelativeTo(null);
 
         listModel = new DefaultListModel<>();
@@ -38,98 +40,93 @@ public class FoodTrackerForm extends JFrame {
 
         loadFood();
         setupButtons();
+        setupListClick();
 
-        pack();
         setVisible(true);
     }
+    private void loadFood() {
 
+        listModel.clear();
+        foodIds.clear();
+
+        MongoCursor<Document> cursor =
+                foodCollection.find(new Document("user", currentUser)).iterator();
+
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+
+            ObjectId id = doc.getObjectId("_id");
+            String food = doc.getString("food");
+            double protein = doc.getDouble("protein");
+
+            foodIds.add(id);
+            listModel.addElement(food + " - " + protein + " g protein");
+        }
+    }
     private void setupButtons() {
-
         addButton.addActionListener(e -> {
 
             String food = foodField.getText().trim();
-            String proteinText = proteinField.getText().trim();
+            double protein;
 
-            if (food.isEmpty() || proteinText.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Fill all fields!");
+            try {
+                protein = Double.parseDouble(proteinField.getText());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Enter valid protein value!");
                 return;
             }
 
-            try {
-                double protein = Double.parseDouble(proteinText);
-
-                Document doc = new Document("user", currentUser)
-                        .append("food", food)
-                        .append("protein", protein);
-
-                foodCollection.insertOne(doc);
-
-                foodField.setText("");
-                proteinField.setText("");
-
-                loadFood();
-
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Protein must be a number!");
+            if (food.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Food name required!");
+                return;
             }
-        });
 
-        editButton.addActionListener(e -> {
-
-            int index = foodList.getSelectedIndex();
-            if (index == -1) return;
-
-            String selected = listModel.getElementAt(index);
-
-            String food = foodField.getText().trim();
-            String proteinText = proteinField.getText().trim();
-
-            if (food.isEmpty() || proteinText.isEmpty()) return;
-
-            double protein = Double.parseDouble(proteinText);
-
-            foodCollection.deleteOne(
-                    new Document("user", currentUser)
-                            .append("display", selected)
-            );
-
-            Document updated = new Document("user", currentUser)
+            Document doc = new Document("user", currentUser)
                     .append("food", food)
                     .append("protein", protein);
 
-            foodCollection.insertOne(updated);
+            foodCollection.insertOne(doc);
+
+            foodField.setText("");
+            proteinField.setText("");
 
             loadFood();
         });
         deleteButton.addActionListener(e -> {
 
             int index = foodList.getSelectedIndex();
-            if (index == -1) return;
 
-            String selected = listModel.getElementAt(index);
+            if (index == -1) {
+                JOptionPane.showMessageDialog(this, "Select item to delete!");
+                return;
+            }
 
-            foodCollection.deleteOne(
-                    new Document("user", currentUser)
-                            .append("display", selected)
-            );
+            ObjectId id = foodIds.get(index);
+
+            foodCollection.deleteOne(new Document("_id", id));
 
             loadFood();
         });
     }
+    private void setupListClick() {
 
-    private void loadFood() {
+        foodList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
 
-        listModel.clear();
+                int index = foodList.getSelectedIndex();
 
-        MongoCursor<Document> cursor =
-                foodCollection.find(new Document("user", currentUser)).iterator();
+                if (index != -1) {
+                    String text = foodList.getSelectedValue();
+                    String[] parts = text.split(" - ");
 
-        while (cursor.hasNext()) {
-            Document d = cursor.next();
-            String display = d.getString("food") +
-                    " - " + d.getDouble("protein") + " g protein";
-            d.append("display", display);
-            listModel.addElement(display);
-        }
+                    foodField.setText(parts[0]);
+
+                    if (parts.length > 1) {
+                        String proteinText = parts[1].replace(" g protein", "");
+                        proteinField.setText(proteinText);
+                    }
+                }
+            }
+        });
     }
 }

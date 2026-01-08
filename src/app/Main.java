@@ -32,19 +32,15 @@ public class Main {
             panel.add(loginButton);
             panel.add(Box.createVerticalStrut(10));
             panel.add(registerButton);
-
             frame.add(panel);
-
             loginButton.addActionListener(e -> {
                 frame.dispose();
                 new LoginForm();
             });
-
             registerButton.addActionListener(e -> {
                 frame.dispose();
                 new RegisterForm();
             });
-
             frame.setVisible(true);
         });
     }
