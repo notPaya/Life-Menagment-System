@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="533" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-14580636"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="9a5ab" class="javax.swing.JTextArea" binding="sleepTextArea">

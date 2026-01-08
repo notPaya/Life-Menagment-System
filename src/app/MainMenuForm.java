@@ -10,7 +10,7 @@ public class MainMenuForm {
     private JButton habitTrackerButton;
     private JButton sleepTrackerButton;
     private JButton foodTrackerButton;
-    private JButton moodTrackerButton;
+    private JButton fitnessTrackerButton;
     private JButton waterTrackerButton;
 
     public MainMenuForm(String username) {
@@ -48,10 +48,10 @@ public class MainMenuForm {
         gbc.gridy = 3;
         mainPanel.add(foodTrackerButton, gbc);
 
-        moodTrackerButton = new JButton("Mood Tracker");
+        fitnessTrackerButton = new JButton("Fitness Tracker");
         gbc.gridx = 1;
         gbc.gridy = 3;
-        mainPanel.add(moodTrackerButton, gbc);
+        mainPanel.add(fitnessTrackerButton, gbc);
 
         waterTrackerButton = new JButton("Water Tracker");
         gbc.gridx = 0;
@@ -67,11 +67,9 @@ public class MainMenuForm {
 
         foodTrackerButton.addActionListener(e -> new FoodTrackerForm(username));
 
-        moodTrackerButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "Mood Tracker clicked"));
-
+        fitnessTrackerButton.addActionListener(e -> new FitnessTrackerForm(username)
+        );
         waterTrackerButton.addActionListener(e -> new WaterTrackerForm(username));
-
         frame.setContentPane(mainPanel);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

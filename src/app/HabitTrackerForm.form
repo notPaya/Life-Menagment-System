@@ -5,7 +5,10 @@
     <constraints>
       <xy x="20" y="20" width="723" height="504"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-14580636"/>
+      <enabled value="true"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="14971" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
