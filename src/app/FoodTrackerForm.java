@@ -17,11 +17,15 @@ public class FoodTrackerForm extends JFrame {
     private JTextField proteinField;
     private JButton addButton;
     private JButton deleteButton;
+    private JButton analyseButton;
     private JList<String> foodList;
+
     private DefaultListModel<String> listModel;
     private List<ObjectId> foodIds = new ArrayList<>();
+
     private MongoCollection<Document> foodCollection;
     private String currentUser;
+
     public FoodTrackerForm(String username) {
 
         this.currentUser = username;
@@ -41,9 +45,11 @@ public class FoodTrackerForm extends JFrame {
         loadFood();
         setupButtons();
         setupListClick();
+        setupAnalyseButton();
 
         setVisible(true);
     }
+
     private void loadFood() {
 
         listModel.clear();
@@ -63,7 +69,9 @@ public class FoodTrackerForm extends JFrame {
             listModel.addElement(food + " - " + protein + " g protein");
         }
     }
+
     private void setupButtons() {
+
         addButton.addActionListener(e -> {
 
             String food = foodField.getText().trim();
@@ -92,6 +100,7 @@ public class FoodTrackerForm extends JFrame {
 
             loadFood();
         });
+
         deleteButton.addActionListener(e -> {
 
             int index = foodList.getSelectedIndex();
@@ -108,6 +117,7 @@ public class FoodTrackerForm extends JFrame {
             loadFood();
         });
     }
+
     private void setupListClick() {
 
         foodList.addListSelectionListener(e -> {
@@ -127,6 +137,39 @@ public class FoodTrackerForm extends JFrame {
                     }
                 }
             }
+        });
+    }
+
+    private void setupAnalyseButton() {
+
+        analyseButton.addActionListener(e -> {
+
+            MongoCursor<Document> cursor =
+                    foodCollection.find(new Document("user", currentUser)).iterator();
+
+            double totalProtein = 0;
+            int count = 0;
+
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                totalProtein += doc.getDouble("protein");
+                count++;
+            }
+
+            if (count == 0) {
+                JOptionPane.showMessageDialog(this, "No food data available!");
+                return;
+            }
+
+            double average = totalProtein / count;
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Average protein intake:\n" +
+                            String.format("%.2f g per food entry", average),
+                    "Protein Analysis",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         });
     }
 }
