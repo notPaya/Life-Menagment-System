@@ -19,6 +19,7 @@ public class FitnessTrackerForm extends JFrame {
     private JButton addButton;
     private JButton deleteButton;
     private JList<String> fitnessList;
+    private JButton analyseButton;
 
     private DefaultListModel<String> listModel;
     private List<ObjectId> fitnessIds = new ArrayList<>();
@@ -105,7 +106,32 @@ public class FitnessTrackerForm extends JFrame {
             clearFields();
             loadFitness();
         });
+        analyseButton.addActionListener(e -> {MongoCursor<Document> cursor = fitnessCollection.find(new Document("user", currentUser)).iterator();
+
+            int count = 0;
+            int totalCalories = 0;
+
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                totalCalories += doc.getInteger("calories");
+                count++;
+            }
+
+            if (count == 0) {
+                JOptionPane.showMessageDialog(this, "No data to analyse!");
+                return;
+            }
+
+            double average = (double) totalCalories / count;
+
+            JOptionPane.showMessageDialog(this,
+                    "Average burned calories: " + String.format("%.2f", average) + " kcal\n" +
+                            "Total calories burned: " + totalCalories + " kcal"
+            );
+        });
+
     }
+
     private void setupListClick() {
 
         fitnessList.addListSelectionListener(e -> {
@@ -125,4 +151,5 @@ public class FitnessTrackerForm extends JFrame {
         durationField.setText("");
         caloriesField.setText("");
     }
+
 }
