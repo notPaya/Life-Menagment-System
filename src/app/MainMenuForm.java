@@ -9,7 +9,7 @@ public class MainMenuForm {
     private JButton financeButton;
     private JButton habitTrackerButton;
     private JButton sleepTrackerButton;
-    private JButton studyTrackerButton;
+    private JButton foodTrackerButton;
     private JButton moodTrackerButton;
     private JButton waterTrackerButton;
 
@@ -43,10 +43,10 @@ public class MainMenuForm {
         gbc.gridy = 2;
         mainPanel.add(sleepTrackerButton, gbc);
 
-        studyTrackerButton = new JButton("Study Planner");
+        foodTrackerButton = new JButton("Food Tracker");
         gbc.gridx = 0;
         gbc.gridy = 3;
-        mainPanel.add(studyTrackerButton, gbc);
+        mainPanel.add(foodTrackerButton, gbc);
 
         moodTrackerButton = new JButton("Mood Tracker");
         gbc.gridx = 1;
@@ -65,8 +65,7 @@ public class MainMenuForm {
 
         sleepTrackerButton.addActionListener(e -> new SleepTrackerForm(username));
 
-        studyTrackerButton.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "Study Planner clicked"));
+        foodTrackerButton.addActionListener(e -> new FoodTrackerForm(username));
 
         moodTrackerButton.addActionListener(e ->
                 JOptionPane.showMessageDialog(frame, "Mood Tracker clicked"));
