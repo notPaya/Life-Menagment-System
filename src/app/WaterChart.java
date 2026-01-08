@@ -3,11 +3,8 @@ package app;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-
 public class WaterChart extends JFrame {
-
     private ArrayList<Double> data;
-
     public WaterChart(ArrayList<Double> data) {
         this.data = data;
 
@@ -16,7 +13,6 @@ public class WaterChart extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
     @Override
     public void paint(Graphics g) {
         super.paint(g);
