@@ -1,4 +1,4 @@
-# Life-Menagment-System
+# Life-Managment-System
 
 ⚠️ Important Note (Branch Information)
 
