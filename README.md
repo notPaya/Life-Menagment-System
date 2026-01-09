@@ -95,7 +95,7 @@ _____________________________________________
 * MongoDB persistence
 _____________________________________________
 
-Database
+🗄 Database
 
 Database: MongoDB
 
